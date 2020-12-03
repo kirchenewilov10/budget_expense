@@ -1,0 +1,75 @@
+{% load i18n %}
+<div class="modal fade text-left" id="registration_modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">{% trans "Incident Record" %}</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <label>{% trans "Location" %}: </label>
+                    <div class="form-group position-relative">
+                    <div class="input-group">
+                        <select class="form-control" v-model="assigning_location">
+                            {% for location in locations %}
+                                <option value="{{ location.id }}">{{ location.name }}</option>
+                            {% endfor %}
+                            <option value="0">Other</option>
+                        </select>
+                    </div></div>
+
+                    <label>{% trans "Guard" %}: </label>
+                    <div class="form-group position-relative">
+                    <div class="input-group">
+                        <select class="form-control" v-model="assigning_guard">
+                            {% for guard in guards %}
+                                <option value="{{ guard.id }}">{{ guard.name }}</option>
+                            {% endfor %}
+                            <option value="0">Other</option>
+                        </select>
+                    </div>
+                    </div>
+                    <label>{% trans "Occured At" %}: </label>
+                    <div class="form-group position-relative has-icon-left">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <input type="date" class="form-control" name="date" v-model="occured_at_date">
+                                <div class="form-control-position">
+                                    <i class="ft-message-square"></i>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <input type="time" class="form-control" name="time" v-model="occured_at_time">
+                                <div class="form-control-position">
+                                    <i class="ft-clock"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <label>{% trans "Event Type" %}: </label>
+                    <div class="form-group position-relative has-icon-left">
+                        <input v-model="event_type" type="text" placeholder="{% trans "Type" %}" class="form-control">
+                        <div class="form-control-position">
+                            <i class="fa fa-user font-medium-5 line-height-1 text-muted icon-align"></i>
+                        </div>
+                    </div>
+                    <label>{% trans "Event Description" %}: </label>
+                    <div class="form-group position-relative has-icon-left">
+                        <textarea v-model="event_desp" placeholder="{% trans "description" %}" class="form-control"></textarea>
+                        <div class="form-control-position">
+                            <i class="fa fa-user font-medium-5 line-height-1 text-muted icon-align"></i>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-md" data-dismiss="modal">{% trans "Close" %}</button>
+                    <button v-on:click="on_add_incident_confirm" type="button" class="btn btn-outline-primary btn-md">{% trans "Confirm" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

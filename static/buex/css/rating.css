@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.stars {
+  margin-bottom: 3rem;
+}
+
+.fa-star {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.gold {
+  color: #ffdf00;
+}
+
+.message {
+  font-size: 2.75rem;
+  margin-top: 3rem;
+}
+
+.message span {
+  display: inline-block;
+  width: 30px;
+  height: auto;
+  text-align: center;
+}
+
+.img-section {
+  margin: 3rem 0;
+}
+
+.img-section img {
+  width: 75px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .stars {
+    margin-bottom: 1rem;
+  }
+
+  .fa-star {
+    font-size: 4rem;
+  }
+
+  .message {
+    font-size: 2rem;
+  }
+}

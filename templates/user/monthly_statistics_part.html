@@ -1,0 +1,86 @@
+<div class="col-md-3 col-12">
+    {% for item in part_1 %}
+        <div class="dragdrop-container dragdrop" id="drag-todos">
+            <div class="card border-left my-4 border-primary border-3 c_12_block">
+                <div class="card-block pt-3">
+                    <div class="clearfix">
+                        <h5 class="text-bold-500 primary float-left">{{ item.month }}</h5>
+                    </div>
+                        <span class="c_py_2 display-inline-block pt-2">Equipment&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.monthly_equppment_cost }} KWD</span>
+                        <br>
+                        <span class="c_py_2 display-inline-block pt-2">Guard&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.monthly_guard_cost }} KWD</span>
+                        <br>
+                        <span class="c_py_2 display-inline-block pt-2">Total&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.t_monthly }} KWD</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="col-md-3 col-12">
+    {% for item in part_2 %}
+        <div class="dragdrop-container dragdrop" id="drag-todos">
+            <div class="card border-left my-4 border-info border-3 c_12_block">
+                <div class="card-block pt-3">
+                    <div class="clearfix">
+                        <h5 class="text-bold-500 info float-left">{{ item.month }}</h5>
+                    </div>
+                        <span class="c_py_2 display-inline-block pt-2">Equipment&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.monthly_equppment_cost }} KWD</span>
+                        <br>
+                        <span class="c_py_2 display-inline-block pt-2">Guard&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.monthly_guard_cost }} KWD</span>
+                        <br>
+                        <span class="c_py_2 display-inline-block pt-2">Total&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.t_monthly }} KWD</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="col-md-3 col-12">
+    {% for item in part_3 %}
+        <div class="dragdrop-container dragdrop" id="drag-todos">
+            <div class="card border-left my-4 border-warning border-3 c_12_block">
+                <div class="card-block pt-3">
+                    <div class="clearfix">
+                        <h5 class="text-bold-500 warning float-left">{{ item.month }}</h5>
+                    </div>
+                        <span class="c_py_2 display-inline-block pt-2">Equipment&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.monthly_equppment_cost }} KWD</span>
+                        <br>
+                        <span class="c_py_2 display-inline-block pt-2">Guard&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.monthly_guard_cost }} KWD</span>
+                        <br>
+                        <span class="c_py_2 display-inline-block pt-2">Total&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.t_monthly }} KWD</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="col-md-3 col-12">
+    {% for item in part_4 %}
+        <div class="dragdrop-container dragdrop" id="drag-todos">
+            <div class="card border-left my-4 border-success border-3 c_12_block">
+                <div class="card-block pt-3">
+                    <div class="clearfix">
+                        <h5 class="text-bold-500 success float-left">{{ item.month }}</h5>
+                    </div>
+                        <span class="c_py_2 display-inline-block pt-2">Equipment&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.monthly_equppment_cost }} KWD</span>
+                        <br>
+                        <span class="c_py_2 display-inline-block pt-2">Guard&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.monthly_guard_cost }} KWD</span>
+                        <br>
+                        <span class="c_py_2 display-inline-block pt-2">Total&nbsp;&nbsp;</span>
+                        <span class="c_py_2 display-inline-block pt-2">{{ item.t_monthly }} KWD</span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

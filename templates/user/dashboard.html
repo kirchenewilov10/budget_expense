@@ -1,0 +1,68 @@
+{% extends 'user/base.html' %}
+{% load staticfiles %}
+{% block page_content %}
+    <div>
+        <div class="row match-height">
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card bg-success">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="row text-white">
+                                <div class="col-6">
+                                    <h1><i class="fa fa-usd background-round text-white p-2 font-medium-3"></i></h1>
+                                    <h4 class="pt-1 m-0 text-white">45% <i class="fa fa-long-arrow-up"></i></h4>
+                                </div>
+                                <div class="col-6 text-right pl-0">
+                                    <h4 class="text-white mb-2">Guards</h4>
+                                    <span>{{ guard.count}}</span>
+                                    <br>
+                                    <span>Grate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card bg-danger">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="row text-white">
+                                <div class="col-6">
+                                    <h1><i class="fa fa-star-o background-round text-white p-2 font-medium-3"></i></h1>
+                                    <h4 class="pt-1 m-0 text-white">10% <i class="fa fa-long-arrow-down"></i></h4>
+                                </div>
+                                <div class="col-6 text-right pl-0">
+                                    <h4 class="text-white mb-2">Locations</h4>
+                                    <span>{{ location.count}}</span>
+                                    <br>
+                                    <span>Average</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card bg-info">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="row text-white">
+                                <div class="col-6">
+                                    <h1><i class="fa fa-line-chart background-round text-white p-2 font-medium-3"></i></h1>
+                                    <h4 class="pt-1 m-0 text-white">20% <i class="fa fa-long-arrow-up"></i></h4>
+                                </div>
+                                <div class="col-6 text-right pl-0">
+                                    <h4 class="text-white mb-2">Equipment Template</h4>
+                                    <span>{{ equipmenttpl.count }}</span>
+                                    <br>
+                                    <span>Good</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'user/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block page_content %}
+    <div id="body_container" class="card table_container">
+        {% include "user/incident_registration_modal.html" %}
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <button class="btn btn-primary mb-1 add-table-elem-btn" v-on:click="on_add_incident" data-toggle="modal" data-target="#registration_modal"><i class="ft-plus"></i>Add a incident</button>
+            <table class="table table-bordered table-sm dataTable" id="table" role="grid">
+                <thead>
+                    {% for data in header_data %}
+                        <th>{{ data.name }}</th>
+                    {% endfor %}
+                </thead>
+                <tbody>
+                    {% for data in incidents_list %}
+                        <tr id="row_{{ data.id }}">
+                            <td role="id">{{ data.id }}</td>
+                            <td role="event_type">{{ data.event_type }}</td>
+                            <td role="event_desp">{{ data.event_desp }}</td>
+                            <td role="event_time" date="{{ data.occured_at_date }}" time="{{ data.occured_at_time }}">{{ data.event_time }}</td>
+                            <td locid="{{ data.location_id }}" role="location">{{ data.location }}</td>
+                            <td gid="{{ data.guard_id }}" role="guard">{{ data.guard }}</td>
+                            <td>
+                                <a v-on:click="on_edit_incident({{ data.id }})" class="success p-0"  data-toggle="modal" data-target="#registration_modal" data-original-title="" title=""><i class="fa fa-pencil font-medium-3 mr-2 i-c-color"></i></a></a>
+                                <a v-on:click="on_del_incident({{ data.id }})" class="success p-0" data-original-title="" title=""><i class="fa fa-trash-o font-medium-3 mr-2 i-color i-c-color"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <script type="text/javascript">
+        let datatable;
+        let page_vue;
+
+        $(document).ready(function(){
+            page_vue = new Vue({
+                delimiters: ['[[', ']]'],
+                el: "#body_container",
+                data: {
+                    type: 0,
+                    row_id: 0,
+                    assigning_location: "",
+                    assigning_guard: "",
+                    occured_at_date: "",
+                    occured_at_time: "",
+                    event_type: "",
+                    event_desp: "",
+                },
+                methods: {
+                    on_add_incident: function () {
+                        $('.modal').appendTo("body");
+                        this.type = 1;
+                        this.assigning_location = "";
+                        this.assigning_guard = "";
+                        this.occured_at_date = "";
+                        this.occured_at_time = "";
+                        this.event_type = "";
+                        this.event_desp = "";
+                    },
+                    on_add_incident_confirm: function () {
+                        if(this.assigning_location === "" || this.assigning_guard === "" || this.occured_at_date === "" || this.event_desp === "" || this.event_type === "" || this.occured_at_time === ""){
+                            show_warning_toastr("", "{% trans "Please enter all information." %}");
+                            return;
+                        }
+                        if (this.type === 1){
+                            let param = {
+                                assigning_location: this.assigning_location,
+                                assigning_guard: this.assigning_guard,
+                                occured_at_date: this.occured_at_date,
+                                occured_at_time: this.occured_at_time,
+                                event_type: this.event_type,
+                                event_desp: this.event_desp,
+                            };
+                            $.ajax({
+                                url: "/buex/incident/add",
+                                type: "POST",
+                                data: param,
+                                success: function (res) {
+                                    ajax_common_result_handler(res);
+                                    reload_page();
+                                }
+                            });
+                        }
+                        if (this.type === 2){
+                            let param = {
+                                assigning_location: this.assigning_location,
+                                assigning_guard: this.assigning_guard,
+                                occured_at_date: this.occured_at_date,
+                                occured_at_time: this.occured_at_time,
+                                event_type: this.event_type,
+                                event_desp: this.event_desp,
+                                row_id: parseInt(this.row_id),
+                            };
+                            $.ajax({
+                                url: "/buex/incident/update",
+                                type: "POST",
+                                data: param,
+                                success: function (res) {
+                                    ajax_common_result_handler(res);
+                                    reload_page();
+                                }
+                            });
+                        }
+                    },
+                    on_edit_incident: function(id) {
+                        $('.modal').appendTo("body");
+                        this.row_id = id;
+                        this.type = 2;
+                        this.assigning_location = $("#row_" + id + " td[role='location']")[0].getAttribute("locid");
+                        this.assigning_guard = $("#row_" + id + " td[role='guard']")[0].getAttribute("gid");
+                        this.occured_at_date = $("#row_" + id + " td[role='event_time']")[0].getAttribute("date");
+                        this.occured_at_time = $("#row_" + id + " td[role='event_time']")[0].getAttribute("time");
+                        this.event_type = $("#row_" + id + " td[role='event_type']").text();
+                        this.event_desp = $("#row_" + id + " td[role='event_desp']").text();
+                    },
+                    on_del_incident: function (id) {
+                        let param = {
+                            row_id: id,
+                        };
+                        $.ajax({
+                            url: "/buex/incident/del",
+                            type: "POST",
+                            data: param,
+                            success: function (res) {
+                                ajax_common_result_handler(res);
+                                reload_page();
+                            }
+                        });
+                    },
+                }
+            });
+
+            datatable = $('#table').DataTable({
+                dom: '<"top"R<"clear">>rt<"bottom"lip<"clear">>',
+                pagingType: "full_numbers",
+                lengthMenu: [[10, 20, 50, ], [10, 20, 50,]],
+            });
+
+        });
+    </script>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,45 @@
+{% load i18n %}
+<div class="modal fade text-left" id="equipment_registration_modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">{% trans "Equipment Template Registration" %}</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <label>{% trans "Equipement Name" %}: </label>
+                    <div class="form-group position-relative has-icon-left">
+                        <input v-model="reg_equipment_name" type="text" placeholder="{% trans "name" %}" class="form-control">
+                        <div class="form-control-position">
+                            <i class="fa fa-user font-medium-5 line-height-1 text-muted icon-align"></i>
+                        </div>
+                    </div>
+
+                    <label>{% trans "Equipement Alias" %}: </label>
+                    <div class="form-group position-relative has-icon-left">
+                        <input v-model="reg_equipment_alias" type="text" placeholder="{% trans "alias" %}" class="form-control">
+                        <div class="form-control-position">
+                            <i class="fa fa-user font-medium-5 line-height-1 text-muted icon-align"></i>
+                        </div>
+                    </div>
+
+                    <label>{% trans "Description" %}: </label>
+                    <div class="form-group position-relative has-icon-left">
+                        <textarea v-model="reg_equipment_desp" placeholder="{% trans "description" %}" class="form-control"></textarea>
+                        <div class="form-control-position">
+                            <i class="fa fa-user font-medium-5 line-height-1 text-muted icon-align"></i>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-md" data-dismiss="modal">{% trans "Close" %}</button>
+                    <button v-on:click="on_add_equipment_confirm" type="button" class="btn btn-outline-primary btn-md">{% trans "Confirm" %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,159 @@
+{% extends 'user/base.html' %}
+{% load staticfiles %}
+{% block page_content %}
+    <div>
+        <div class="row match-height">
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card bg-success">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="row text-white">
+                                <div class="col-6">
+                                    <h1><i class="fa fa-usd background-round text-white p-2 font-medium-3"></i></h1>
+                                    <h4 class="pt-1 m-0 text-white">45% <i class="fa fa-long-arrow-up"></i></h4>
+                                </div>
+                                <div class="col-6 text-right pl-0">
+                                    <h4 class="text-white mb-2">Guards</h4>
+                                    <span>{{ guard.count}}</span>
+                                    <br>
+                                    <span>Grate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card bg-danger">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="row text-white">
+                                <div class="col-6">
+                                    <h1><i class="fa fa-star-o background-round text-white p-2 font-medium-3"></i></h1>
+                                    <h4 class="pt-1 m-0 text-white">10% <i class="fa fa-long-arrow-down"></i></h4>
+                                </div>
+                                <div class="col-6 text-right pl-0">
+                                    <h4 class="text-white mb-2">Locations</h4>
+                                    <span>{{ location.count}}</span>
+                                    <br>
+                                    <span>Average</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card bg-info">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="row text-white">
+                                <div class="col-6">
+                                    <h1><i class="fa fa-line-chart background-round text-white p-2 font-medium-3"></i></h1>
+                                    <h4 class="pt-1 m-0 text-white">20% <i class="fa fa-long-arrow-up"></i></h4>
+                                </div>
+                                <div class="col-6 text-right pl-0">
+                                    <h4 class="text-white mb-2">Equipment</h4>
+                                    <span>{{ equipmenttpl.count }}</span>
+                                    <br>
+                                    <span>Good</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card bg-warning">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="row text-white">
+                                <div class="col-6">
+                                    <h1><i class="fa fa-rocket background-round text-white p-2 font-medium-3"></i></h1>
+                                    <h4 class="pt-1 m-0 text-white">82% <i class="fa fa-long-arrow-up"></i></h4>
+                                </div>
+                                <div class="col-6 text-right pl-0">
+                                    <h4 class="text-white">Referral</h4>
+                                    <span>980</span>
+                                    <br>
+                                    <span>Grate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card gradient-orange-amber">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="media">
+                                <div class="align-center">
+                                    <i class="icon-pointer text-white font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-white text-right">
+                                    <h3 class="text-white">423</h3>
+                                    <span>Total Visits</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card gradient-light-blue-cyan">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="media">
+                                <div class="align-center">
+                                    <i class="icon-pencil text-white font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-white text-right">
+                                    <h3 class="text-white">278</h3>
+                                    <span>New Posts</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card gradient-red-pink">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="media">
+                                <div class="align-center">
+                                    <i class="icon-speech text-white font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-white text-right">
+                                    <h3 class="text-white">156</h3>
+                                    <span>New Comments</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-12">
+                <div class="card gradient-mint">
+                    <div class="card-body">
+                        <div class="px-3 py-3">
+                            <div class="media">
+                                <div class="align-center">
+                                    <i class="icon-graph text-white font-large-2 float-left"></i>
+                                </div>
+                                <div class="media-body text-white text-right">
+                                    <h3 class="text-white">64.89 %</h3>
+                                    <span>Bounce Rate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

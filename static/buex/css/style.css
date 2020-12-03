@@ -1,0 +1,242 @@
+body {
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    color: black;
+}
+
+.app-sidebar, .off-canvas-sidebar {
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.page-description {
+    font-size: 20px;
+}
+
+.total-record {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* ---------- button ---------- */
+.btn-001 {
+    width: 120px;
+}
+
+.btn-round-sm {
+    width:30px;
+    height:30px;
+    padding-top:3px;
+    padding-left:8px;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+/* ---------- paragraph ---------- */
+.paragraph-001 {
+    margin-top: 5px;
+}
+
+.paragraph-002 {
+    margin-top: 10px;
+}
+
+.paragraph-003 {
+    margin-top: 15px;
+}
+
+.paragraph-004 {
+    margin-top: 20px;
+}
+
+.paragraph-005 {
+    margin-top: 25px;
+}
+
+.paragraph-006 {
+    margin-top: 30px;
+}
+
+.paragraph-007 {
+    margin-top: 40px;
+}
+
+.paragraph-008 {
+    margin-top: 50px;
+}
+
+
+/* ---------- tab ---------- */
+.tab {
+    min-height: 150px;
+    display: None;
+}
+.step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #0A72E8;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.7;
+}
+
+/* Mark the active step: */
+.step.active {
+    opacity: 1;
+}
+
+#test_form {
+    background-color: white;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 100%;
+    min-width: 300px;
+    margin-top:-10px;
+}
+
+.question {
+    margin-top:50px;
+}
+
+.question-body {
+    margin-left: 20px;
+}
+
+.answer-choice {
+    margin-top: 10px;
+}
+
+.type-radio input {
+	width:20px;
+	float:left;
+    outline: none;
+}
+
+.type-radio label {
+	font-size:20px;
+	margin-top:8px;
+	margin-left:10px;
+}
+
+.type-check input {
+	width:20px;
+	float:left;
+}
+.type-check label {
+	font-size:20px;
+	margin-top:3px;
+	margin-left:10px;
+}
+.type-select select {
+	width: 400px;
+	font-size: 18px;
+}
+.type-select option {
+	font-size: 18px;
+}
+.type-textarea textarea {
+	width: 800px;
+	border: 1px solid #c1bbbb;
+	font-size: 18px;
+}
+
+.type-text input {
+	width: 500px;
+	border: 1px solid #c1bbbb;
+	font-size: 18px;
+}
+.type-text input {
+    height: 50px;
+}
+
+.type-description p {
+	font-size: 20px;
+}
+
+.type-description input {
+	width: 25px;
+	height: 25px;
+	float: left;
+}
+
+.type-description label {
+	font-size: 20px;
+	margin-top: -3px;
+	margin-left: 5px;
+}
+
+.type-number input {
+	font-size: 18px;
+}
+
+.type-rate .checked {
+}
+
+.action-icon {
+    font-size: 20px;
+    color: #54595f;
+    cursor: pointer;
+}
+.action-icon:hover {
+    color: black;
+}
+
+.answer-form {
+    border: 1px solid #a5acb3;
+    padding: 15px;
+    padding-top: 5px;
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        margin-top: 90px;
+    }
+}
+
+#start_message {
+    margin-top:80px;
+    width:700px;
+    max-width:100%;
+    line-height:40px;
+}
+
+#congrate_message {
+    display: none;
+    margin-top:80px;
+    width:700px;
+    max-width:100%;
+    line-height:40px;
+}
+
+.dragdrop {
+    background-color: unset !important;
+}
+.c_py_2{
+    padding-right: 15px;
+}
+
+.c_12_block {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+}

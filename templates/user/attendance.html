@@ -1,0 +1,158 @@
+{% extends 'user/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block page_content %}
+    <div id="guard_management" class="card table_container">
+
+<div class="row">
+<div class="col-sm-4 col-md-4 col-lg-4">
+    <form class="form form-horizontal" style="margin-top: 5px;">
+        <div class="form-body">
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control" for="ga_name">Name: </label>
+                <div class="col-md-9 col-9">
+                <div class="input-group">
+                        <select class="form-control" v-model="location_id" v-on:change="on_select_attendacedate">
+                            {% for location in locations %}
+                                <option value="{{ location.id }}">{{ location.name }}</option>
+                            {% endfor %}
+                        </select>
+                </div></div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control" for="ga_today_date">Date: </label>
+                <div class="col-md-9 col-9">
+                    <div class="position-relative has-icon-left">
+                        <input type="date" class="form-control" name="date" v-model="ga_today_date" v-on:change="on_select_attendacedate">
+                        <div class="form-control-position">
+                            <i class="ft-message-square"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control">Rate Per Hour: </label>
+                <div class="col-md-9 col-9">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="ga_rateperhour" value="{{ guard_cost }}" readonly>
+                        <div class="input-group-append">
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control">Total Hour: </label>
+                <div class="col-md-9 col-9">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">hr</span>
+                        </div>
+                        <input type="number" class="form-control" id="ga_toatl_hour" readonly value="{{ total_hour }}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control">Total Cost: </label>
+                <div class="col-md-9 col-9">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">KWD</span>
+                        </div>
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="ga_total_cost" readonly value="{{ total_cost }}">
+                        <div class="input-group-append">
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions right cus-form-action">
+            <button type="button" class="btn btn-success cus-btn" v-on:click="on_save_attendances">
+                <i class="icon-note"></i> Save
+            </button>
+
+        </div>
+    </form>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8">
+    <table class="table table-bordered table-sm dataTable" id="table" role="grid">
+        <thead>
+            {% for data in header_data %}
+                <th>{{ data.name }}</th>
+            {% endfor %}
+        </thead>
+        <tbody>
+            {% for data in attendance_per_day_list %}
+                <tr id="row_{{ data.guard_id }}">
+                    <td role="id">{{ data.guard_id }}</td>
+                    <td role="name">{{ data.name }}</td>
+                    <td role="attendedhour">
+                        <input type="number" value="{{ data.attended_hour }}">
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+<script type="text/javascript">
+    let data_table;
+    let attendance_vue;
+    $(document).ready(function(){
+        data_table = $('#table').DataTable({
+            dom: '<"top"R<"clear">>rt<"bottom"lip<"clear">>',
+            pagingType: "full_numbers",
+            lengthMenu: [[50, 100, 150, ], [50, 100, 150,]],
+        });
+
+        attendance_vue = new Vue({
+            delimiters: ['[[', ']]'],
+            el: "#guard_management",
+            data: {
+                location_id: {{ location_id }},
+                ga_today_date: '{{ filter_date }}',
+            },
+            methods: {
+                on_select_attendacedate: function() {
+                    window.location.href = "/buex/guard/calculation?location_id=" + this.location_id + "&filter_date=" + this.ga_today_date;
+                },
+                on_get_attendance_hours: function() {
+                    let tbody_tr = $("#table tbody tr");
+                        let total_length = tbody_tr.length;
+                        let all_items = [];
+                        let all_count = 0;
+                        for (let i = 0; i < total_length; i++) {
+                            let guard_id = $("#table tbody tr:nth-child(" + (i + 1) + ") td[role='id']").text();
+                            let loc_attended_hour = $("#table tbody tr:nth-child(" + (i + 1) + ") td[role='attendedhour']")[0].childNodes[0].value;
+                            all_items[all_count++] = {guard_id: guard_id, loc_attended_hour: loc_attended_hour};
+                        }
+                        return all_items;
+                },
+                on_save_attendances: function () {
+                    let param = {
+                        ga_today_date: this.ga_today_date,
+                        location_id: this.location_id,
+                        guard_attendance: JSON.stringify(this.on_get_attendance_hours())
+                    };
+                    $.ajax({
+                        url: "/buex/guard/save_attendances",
+                        type: "POST",
+                        data: param,
+                        success: function (res) {
+                            ajax_common_result_handler(res);
+                            reload_page();
+                        }
+                    });
+                },
+
+            }
+        });
+    });
+</script>
+    </div>
+{% endblock %}

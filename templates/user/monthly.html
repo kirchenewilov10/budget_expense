@@ -1,0 +1,71 @@
+{% extends 'user/base.html' %}
+{% load staticfiles %}
+{% block page_content %}
+<section id="taskboard">
+    <div class="row">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <label class="label-control" style="padding-top: 5px;float:right;" for="ga_name">Year: </label>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <label class="label-control" style="padding-top: 5px;" for="ga_name">{{ current_year }} </label>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+        <label class="label-control" style="padding-top: 5px;float:right;" for="ga_name">Select location: </label>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3">
+        <div class="input-group">
+                <select class="form-control" v-model="location_id" v-on:change="on_select_location">
+                    <option value="0">All</option>
+                    {% for location in locations %}
+                        <option value="{{ location.id }}">{{ location.name }}</option>
+                    {% endfor %}
+                </select>
+        </div></div>
+    </div>
+
+    <div class="row monthly_statistics">
+
+    </div>
+
+    <div class="row" style="padding-top: 10px">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <label class="label-control" style="padding-top: 5px;float:right;" for="ga_name">Monthly Report: </label>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <button type="button" class="btn btn-success cus-btn" v-on:click="on_export_monthly_report">
+                <i class="icon-note"></i> Export
+            </button>
+        </div>
+
+    </div>
+</section>
+<script type="text/javascript">
+let page_vue;
+$(document).ready(function(){
+    page_vue = new Vue({
+        delimiters: ['[[', ']]'],
+        el: "#taskboard",
+        data: {
+            location_id: '0',
+        },
+        methods: {
+            on_select_location: function() {
+                $(".monthly_statistics").load("/buex/monthly/filter", {location_id: this.location_id});
+            },
+            on_export_monthly_report: function () {
+                $.ajax({
+                    type:'POST',
+                    url: '/buex/monthly/export',
+                    success: function (res) {
+
+                    }
+                });
+            }
+        }
+    });
+    $(".monthly_statistics").load("/buex/monthly/filter", {location_id: 0});
+});
+</script>
+{% endblock %}

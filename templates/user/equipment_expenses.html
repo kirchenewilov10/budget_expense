@@ -1,0 +1,211 @@
+{% extends 'user/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block page_content %}
+    <div id="eqep_management" class="card table_container">
+
+<div class="row">
+<div class="col-sm-4 col-md-4 col-lg-4">
+    <form class="form form-horizontal" style="margin-top: 5px;">
+        <div class="form-body">
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control">Date: </label>
+                <div class="col-md-9 col-9">
+                    <div class="position-relative has-icon-left">
+                        <input type="date" class="form-control" name="date" v-model="purchased_date">
+                        <div class="form-control-position">
+                            <i class="ft-message-square"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control">Equipment Template: </label>
+                <div class="col-md-9 col-9">
+                    <div class="input-group">
+                        <select class="form-control" v-model="equipment_template">
+                            {% for equipmenttpl in equipmenttpls %}
+                                <option value="{{ equipmenttpl.id }}">{{ equipmenttpl.equipment_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control">Assinging Location: </label>
+                <div class="col-md-9 col-9">
+                    <div class="input-group">
+                        <select class="form-control" v-model="assigning_location">
+                            {% for location in locations %}
+                                <option value="{{ location.id }}">{{ location.name }}</option>
+                            {% endfor %}
+                            <option value="0">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control">Cost: </label>
+                <div class="col-md-9 col-9">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">KWD</span>
+                        </div>
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" v-model="equipment_cost">
+                        <div class="input-group-append">
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-3 label-control">Amount: </label>
+                <div class="col-md-9 col-9">
+                    <div class="input-group">
+                        <input type="number" class="form-control" v-model="equipment_amount">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-actions right cus-form-action">
+            <button type="button" class="btn btn-success cus-btn" v-on:click="on_save_equipment_cost">
+                <i class="icon-note"></i> Save
+            </button>
+
+        </div>
+    </form>
+</div>
+<div class="col-sm-8 col-md-8 col-lg-8">
+    <table class="table table-bordered table-sm dataTable" id="table" role="grid">
+        <thead>
+            {% for data in header_data %}
+                <th>{{ data.name }}</th>
+            {% endfor %}
+        </thead>
+        <tbody>
+            {% for data in equipmentcost_list %}
+                <tr id="row_{{ data.id }}">
+                    <td role="equipmenttpl_id">
+                        <select class="form-control" style="height: 30px">
+                            {% for item in equipmenttpls %}
+                                {% if item.id  == data.equipmenttpl_id %}
+                                    <option selected value="{{ item.id }}">{{ item.equipment_name }}</option>
+                                {% else %}
+                                    <option value="{{ item.id }}">{{ item.equipment_name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td role="equipment_cost">
+                        <input type="number" value="{{ data.equipment_cost }}">
+                    </td>
+                    <td role="purchased_count">
+                        <input type="number" value="{{ data.purchased_count }}">
+                    </td>
+                    <td role="loc_id">
+                        <select class="form-control" style="height: 30px">
+                            {% for item in locations %}
+                                {% if item.id  == data.assigning_loc_id %}
+                                    <option selected value="{{ item.id }}">{{ item.name }}</option>
+                                {% else %}
+                                    <option value="{{ item.id }}">{{ item.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td role="date"><input style="height: 30px" type="date" class="form-control" name="date" value="{{ data.purchased_date }}"></td>
+                    <td>
+                        <a v-on:click="on_edit_equipmentcost({{ data.id }})" class="success p-0"  data-toggle="modal" data-original-title="" title=""><i class="fa fa-pencil font-medium-3 mr-2 i-c-color"></i></a></a>
+                        <a v-on:click="on_del_equipmentcost({{ data.id }})" class="success p-0" data-original-title="" title=""><i class="fa fa-trash-o font-medium-3 mr-2 i-c-color"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+<script type="text/javascript">
+    let data_table;
+    let eqep_vue;
+    $(document).ready(function(){
+        data_table = $('#table').DataTable({
+            dom: '<"top"R<"clear">>rt<"bottom"lip<"clear">>',
+            pagingType: "full_numbers",
+            lengthMenu: [[50, 100, 150, ], [50, 100, 150,]],
+        });
+
+        eqep_vue = new Vue({
+            delimiters: ['[[', ']]'],
+            el: "#eqep_management",
+            data: {
+                purchased_date: '',
+                assigning_location: '',
+                equipment_cost: '',
+                equipment_amount: '',
+                equipment_template: ''
+            },
+            methods: {
+                on_save_equipment_cost: function() {
+                    if(this.purchased_date === "" || this.equipment_cost === "" || this.equipment_amount === "" || this.assigning_location === "" || this.equipment_template === ""){
+                        show_warning_toastr("", "{% trans "Please enter all information." %}");
+                        return;
+                    }
+                    let param = {
+                        purchased_date: this.purchased_date,
+                        equipment_cost: this.equipment_cost,
+                        equipment_amount: this.equipment_amount,
+                        assigning_location: this.assigning_location,
+                        equipment_template: this.equipment_template
+                    };
+                    $.ajax({
+                        url: '/buex/equipment/purchase',
+                        type: "POST",
+                        data: param,
+                        success: function (res) {
+                            ajax_common_result_handler(res);
+                            reload_page();
+                        }
+
+                    });
+                },
+                on_edit_equipmentcost: function (id) {
+                    if (!confirm("Are you sure to update this?")) return;
+                    let param = {
+                        purchased_date: $("#row_" + id + " td[role='date']")[0].childNodes[0].value,
+                        equipment_cost: $("#row_" + id + " td[role='equipment_cost']")[0].childNodes[0].value,
+                        equipment_amount: $("#row_" + id + " td[role='purchased_count']")[0].childNodes[0].value,
+                        assigning_location: $("#row_" + id + " td[role='loc_id']")[0].childNodes[0].value,
+                        equipment_template: $("#row_" + id + " td[role='equipmenttpl_id']")[0].childNodes[0].value,
+                        id:id
+                    };
+                    $.ajax({
+                        url: '/buex/equipment/update_equipcot',
+                        type: 'POST',
+                        data: param,
+                        success: function (res) {
+                            ajax_common_result_handler(res);
+                            reload_page();
+                        }
+                    })
+                },
+                on_del_equipmentcost: function (id) {
+                    if (!confirm("Are you sure to delete this?")) return;
+                    let param = {"id": id};
+                    $.ajax({
+                        url: '/buex/equipment/del_equipcost',
+                        type: 'POST',
+                        data: param,
+                        success: function (res) {
+                            ajax_common_result_handler(res);
+                            reload_page();
+                        }
+                    });
+                },
+            }
+        });
+    });
+</script>
+    </div>
+{% endblock %}

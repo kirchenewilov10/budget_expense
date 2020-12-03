@@ -1,0 +1,62 @@
+{% extends 'user/base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block page_content %}
+    <div id="guard_cost_management" class="card table_container">
+        <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <form class="form form-horizontal" style="margin-top: 5px;">
+                <div class="form-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-3 label-control">Rate Per Hour: </label>
+                        <div class="col-md-9 col-9">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">KWD</span>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" v-model="ga_rateperhour" id="ga_rateperhour">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions right cus-form-action">
+                        <button type="button" class="btn btn-success cus-btn" v-on:click="on_set_guard_cost">
+                            <i class="icon-note"></i> Save
+                        </button>
+
+                    </div>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+    <script>
+        let cost_vue;
+        $(document).ready(function() {
+            cost_vue = new Vue({
+                delimiters: ['[[', ']]'],
+                el: "#guard_cost_management",
+                data: {
+                    ga_rateperhour: {{ guard_cost }},
+                },
+                methods: {
+                    on_set_guard_cost: function () {
+                        let param = {ga_rateperhour: this.ga_rateperhour};
+                        $.ajax({
+                            url: "/buex/guard/set_guard_cost",
+                            type: "POST",
+                            data: param,
+                            success: function (res) {
+                                ajax_common_result_handler(res);
+                            }
+                        });
+                    },
+
+                }
+            });
+        });
+    </script>
+{% endblock %}
